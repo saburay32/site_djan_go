@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    {%for post in news%}
+       <h1>{{post.title}}</h1>
+       <p>{{post.text}}</p>
+       {%if post.autor %}
+           <p>Автор: {{post.autor}}</p>
+       {%else%}
+           <p>Автор: Admin</p>
+       {%endif%}
+       <p>Дата публикации: {{post.date}}</p>
+    {%endfor%}
+</body>
+</html>

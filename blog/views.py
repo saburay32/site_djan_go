@@ -4,9 +4,11 @@ from django.http import HttpResponse
 news = [
     {
         'title': 'First news',
-        'text': 'Some text',
-        'date': '23.11.2021',
-        'autor': 'Georgiy'
+        'text': 'ВОЗ назвала новый штамм коронавируса вызывающим беспокойство.'
+                'У него больше мутаций, чем известно науке о других вариантах, пояснили в организации',
+        'date': '26.11.2021',
+        'autor': 'https://www.kp.ru/online/news/'
+
 
     },
     {

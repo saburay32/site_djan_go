@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import News
 
 news = [
     {
@@ -21,7 +21,7 @@ news = [
 
 def home(request):
     data = {
-        'news': news,
+        'news': News.objects.all(),
         'title':'Главная страница блога'
     }
     return render(request,'blog/home.html', data)

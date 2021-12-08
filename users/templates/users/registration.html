@@ -1,9 +1,14 @@
 {%extends 'blog/main.html'%}
+{% load crispy_forms_tags %}
 {% block main_section %}
-    <h3><b>Страница с контактами</b></h3>
-    <b1>8-*60-558-4-**8</b1>
-    <img src="https://static.tildacdn.com/tild6435-3662-4632-a663-633936326165/-.jpg" class="img-thumbnail mb-1">
-    <p>55°14′51″ с. ш. 38°11′21″ в. д.</p>
+    <div class="form-sectiom">
+      <h2>Регистрация на сайте</h2>
+      <form  method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+          <button type="submit" class="btn btn-outline-warning">Зарегистрироваться</button>
+      </form>
+    </div>
 {% endblock main_section %}
 
 {% block aside_news_section%}

@@ -22,9 +22,9 @@ news = [
 def home(request):
     data = {
         'news': News.objects.all(),
-        'title':'Главная страница блога'
+        'title': 'Главная страница сайта'
     }
     return render(request,'blog/home.html', data)
 
 def contacts(request):
-    return render(request,'blog/contacts.html',{'title': 'О нас'})
+    return render(request, 'blog/contacts.html', {'title': 'О нас'})

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserReg
+from .forms import UserReg, ProfileImage, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -20,4 +20,12 @@ def register(request):
 
 @login_required()
 def profile(request):
-    return render(request, 'users/profile.html')
+    img_profile = ProfileImage()
+    update_user = UserUpdateForm()
+
+    data = {
+        'img_profile': img_profile,
+        'update_user': update_user
+    }
+
+    return render(request, 'users/profile.html', data)

@@ -2,19 +2,24 @@
 {% block main_section %}
     {%for post in news%}
         <div class="alert alert-light">
-             <h1>{{post.title}}</h1>
-             <p>{{post.text}}</p>
-             <span class="text-muted">Опубликовано: {{post.date|date:"j F Y, в H:i"}}</span>
-             {%if post.autor %}
-                 <p><b>Автор:</b><mark>{{post.autor}}</mark></p>
-             {%else%}
-                 <p><b>Автор:</b><mark>Админ</mark></p>
-             {%endif%}
+            <h1>{{post.title}}</h1>
+            <p>{{post.text}}</p>
+             <div class="row">
+                <div>
+                    {% if post.autor.profile.img %}
+                       <img src="{{ post.autor.profile.img.url }}" alt="{{ post.autor }}"  class="user_image">
+                    {% else %}
+                       <img src=" /pictures/default.jpg" alt="{{ post.autor }}"  class="user_image">
+                    {% endif %}
+                </div>
+                <div class="mt-2">
+                    <span class="text-muted"><b>Опубликовано:</b> {{post.date|date:"j F Y, в H:i"}}</span>
+                    <p><b>Автор:</b> <mark>{{post.autor}}</mark></p>
+                </div>
+             </div>
         </div>
-
-    {%endfor%}
+    {% endfor %}
 {% endblock main_section %}
-
 
 {% block aside_news_section%}
 <h3><b>Новости биологии и медицины</b></h3>

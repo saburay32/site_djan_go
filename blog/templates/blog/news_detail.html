@@ -1,7 +1,7 @@
 {%extends 'blog/main.html'%}
 {% block main_section %}
-    {%for post in news%}
         <div class="alert alert-light">
+            <a href="{% url 'blog-home' %}">Вернуться на главную</a>
             <h1>{{post.title}}</h1>
             <p>{{post.text}}</p>
              <div class="row">
@@ -17,9 +17,7 @@
                     <p><b>Автор:</b> <mark>{{post.autor}}</mark></p>
                 </div>
              </div>
-            <a href="{% url 'news-detail' post.id %}" class="btn btn-outline-warning">Читать далее</a>
         </div>
-    {% endfor %}
 {% endblock main_section %}
 
 {% block aside_news_section%}

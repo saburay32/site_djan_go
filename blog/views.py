@@ -1,23 +1,38 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView
 from .models import News
 
-news = [
-    {
-        'title': 'First news',
-        'text': 'ВОЗ назвала новый штамм коронавируса вызывающим беспокойство.'
-                'У него больше мутаций, чем известно науке о других вариантах, пояснили в организации',
-        'date': ' 26.11.2021',
-        'autor': 'https://www.kp.ru/online/news/'
+
+class ShowNewsView(ListView):
+    model = News
+    template_name = 'blog/home.html'
+    context_object_name = 'news'
+    ordering = ['-date']
+
+    def get_context_data(self, **kwards):
+        ctx = super(ShowNewsView,self).get_context_data(**kwards)
+        ctx['title'] = 'Главная страница блога'
+        return ctx
 
 
-    },
-    {
-        'title': 'Second news',
-        'text': 'Some big 2 text',
-        'date': ' 23.11.2021'
+class NewsDetailView(DetailView):
+    model = News
+    context_object_name = 'post'
 
-    }
-]
+    def get_context_data(self, **kwards):
+        ctx = super(NewsDetailView,self).get_context_data(**kwards)
+        ctx['title'] = News.objects.filter(pk=self.kwargs['pk']).first()
+        return ctx
+
+
+class CreateNewsView(CreateView):
+    model = News
+    fields = ['title', 'text']
+
+    def form_valid(self, form):
+        form.instance.autor=self.request.user
+        return super().form_valid(form)
+
 
 def home(request):
     data = {

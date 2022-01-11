@@ -1,5 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import (ListView,
+                                  DetailView,
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import News
 
 
@@ -24,8 +29,32 @@ class NewsDetailView(DetailView):
         ctx['title'] = News.objects.filter(pk=self.kwargs['pk']).first()
         return ctx
 
+class UpdateNewsView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = News
+    fields = ['title', 'text']
 
-class CreateNewsView(CreateView):
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        news = self.get_object()
+        if self.request.user == news.autor:
+            return True
+        return False
+
+
+class DeleteNewsView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = News
+    success_url = '/'
+
+    def test_func(self):
+        news = self.get_object()
+        if self.request.user == news.autor:
+            return True
+        return False
+
+class CreateNewsView(LoginRequiredMixin, CreateView):
     model = News
     fields = ['title', 'text']
 

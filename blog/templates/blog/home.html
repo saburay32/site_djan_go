@@ -3,7 +3,7 @@
     {%for post in news%}
         <div class="alert alert-light">
             <h1>{{post.title}}</h1>
-            <p>{{post.text}}</p>
+            <p>{{post.text|striptags|truncatechars:250 }}</p>
              <div class="row">
                 <div>
                     {% if post.autor.profile.img %}
@@ -20,6 +20,24 @@
             <a href="{% url 'news-detail' post.id %}" class="btn btn-outline-warning">Читать далее</a>
         </div>
     {% endfor %}
+
+    {% if is_paginated %}
+       {% if page_obj.has_previous %}
+           <a href="/" class="btn btn-outline-warning">Начало</a>
+           <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning">Предыдущая</a>
+       {% endif %}
+       {% for num in page_obj.paginator.page_range %}
+          {% if num == page_obj.number %}
+             <button class="btn btn-warning">{{num}}</button>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+             <a href="?page={{ num }}" class="btn btn-outline-warning">{{ num }}</a>
+          {% endif %}
+       {% endfor %}
+       {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-warning">Следующая</a>
+           <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-warning">Последняя</a>
+       {% endif %}
+    {% endif %}
 {% endblock main_section %}
 
 {% block aside_news_section%}
